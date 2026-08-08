@@ -1,0 +1,27 @@
+name: Manifest guard
+
+on:
+  pull_request:
+  push:
+    branches: [main, master]
+
+# `.well-known/siteskin.json` is not authored here. It is a byte-identical copy of
+# `spec/fixtures/valid/bloom-flowers.json` in denrzv/webora, which is the conformance
+# fixture the SiteSkin validator is written against. The copy direction is one-way.
+#
+# The guard is a checksum pinned in BOTH repos rather than a cross-repo fetch. webora's
+# SpecCorpusTest asserts the same hash against its fixture, so whichever side is edited
+# alone breaks its own build immediately — no network, no dependency on a branch name,
+# and no window where the two silently disagree.
+jobs:
+  checksum:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Manifest matches the canonical fixture
+        working-directory: .well-known
+        run: sha256sum --check siteskin.json.sha256
+
+      - name: Manifest is valid JSON
+        run: python3 -c "import json; json.load(open('.well-known/siteskin.json'))"
