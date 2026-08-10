@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Bloom Flowers — fresh flowers delivered today</title>
+    <meta
+      name="description"
+      content="Bloom Flowers is the reference integration for the SiteSkin protocol: an ordinary
+               static shop that publishes one manifest and gets native browser chrome."
+    />
+    <link rel="stylesheet" href="/assets/site.css" />
+    <link rel="icon" href="/assets/siteskin/logo.png" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="site-header">
+      <div class="wrap">
+        <a class="brand" href="/">
+          <img src="/assets/siteskin/logo.png" alt="" width="40" height="40" />
+          <span>Bloom Flowers</span>
+        </a>
+        <nav class="site-nav" aria-label="Primary">
+          <ul>
+            <li><a href="/" aria-current="page">Home</a></li>
+            <li><a href="/catalog/">Catalog</a></li>
+            <li><a href="/cart/">Cart</a></li>
+            <li><a href="/account/">Account</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main">
+      <div class="wrap">
+        <div class="hero">
+          <h1>Fresh flowers delivered today</h1>
+          <p class="lede">
+            Cut this morning, arranged this afternoon, at your door this evening. Order before 2pm
+            for same-day delivery across the city.
+          </p>
+          <div class="actions">
+            <a class="button" href="/catalog/">Browse the catalog</a>
+            <a class="button button--secondary" href="tel:+10000000000">Call the shop</a>
+          </div>
+        </div>
+
+        <h2>Best sellers</h2>
+        <ul class="grid">
+          <li class="card">
+            <div class="swatch" aria-hidden="true">💐</div>
+            <h3>Spring Market Bunch</h3>
+            <p class="price">$38</p>
+            <p class="note">Tulips, ranunculus and eucalyptus, wrapped in kraft paper.</p>
+          </li>
+          <li class="card">
+            <div class="swatch" aria-hidden="true">🌹</div>
+            <h3>Garden Roses, Dozen</h3>
+            <p class="price">$54</p>
+            <p class="note">Scented English roses in blush and cream.</p>
+          </li>
+          <li class="card">
+            <div class="swatch" aria-hidden="true">🌷</div>
+            <h3>Tulip Trio</h3>
+            <p class="price">$24</p>
+            <p class="note">Thirty stems, three colours, no filler.</p>
+          </li>
+          <li class="card">
+            <div class="swatch" aria-hidden="true">🪴</div>
+            <h3>Desk Plant Duo</h3>
+            <p class="price">$32</p>
+            <p class="note">Two small pots that forgive a missed watering.</p>
+          </li>
+        </ul>
+
+        <section class="callout" aria-labelledby="about-siteskin">
+          <h2 id="about-siteskin">About this site</h2>
+          <p>
+            Bloom Flowers is not a real shop. It is the reference integration for
+            <strong>SiteSkin</strong>, an open protocol that lets a website describe its own
+            navigation and branding so a browser can render them as native chrome.
+          </p>
+          <p>
+            The entire integration is one file:
+            <a href="/.well-known/siteskin.json"><code>/.well-known/siteskin.json</code></a>. In a
+            browser that does not implement SiteSkin — including the one you are almost certainly
+            using — that file is ignored and this page behaves like any other website. That is the
+            point.
+          </p>
+          <p>
+            <a href="https://github.com/denrzv/bloom-flowers/blob/main/INTEGRATION.md"
+              >Read the integration guide</a
+            >
+            to add it to your own site.
+          </p>
+        </section>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="wrap">
+        <p>Bloom Flowers — a demonstration site for the SiteSkin protocol. Nothing here is for sale.</p>
+        <p>No cookies, no analytics, no third-party requests. Every byte is served from this origin.</p>
+      </div>
+    </footer>
+  </body>
+</html>

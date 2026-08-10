@@ -1,0 +1,45 @@
+name: siteskin-lint (deployed origin)
+
+# Runs the real validator against the live site, over the network, exactly as a site owner would:
+#
+#     ./gradlew :siteskin-lint:run --args="https://bloomflowers.webora.app"
+#
+# Exit 0 means a trusted configuration exists — warnings and dropped items do not change that.
+#
+# Manual on purpose. This job depends on DNS for bloomflowers.webora.app and on a completed Pages
+# deploy, neither of which lives in this repository. On a schedule it would report red until both
+# exist, and a job that is expected to be red is a job everyone learns to ignore — which is worse
+# than not having it. The offline guards in manifest-guard.yml are the ones that gate merges.
+#
+# What this catches that the offline checks cannot: TLS, the redirect chain, the response
+# Content-Type, and whether the deployed bytes are the bytes in this repository.
+
+on:
+  workflow_dispatch:
+    inputs:
+      origin:
+        description: Origin to lint (scheme and host only, no path)
+        required: true
+        default: https://bloomflowers.webora.app
+
+permissions:
+  contents: read
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the validator
+        uses: actions/checkout@v4
+        with:
+          repository: denrzv/webora
+          path: webora
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "25"
+
+      - name: Lint the deployed manifest
+        working-directory: webora
+        run: ./gradlew --quiet :siteskin-lint:run --args="${{ inputs.origin }}"
