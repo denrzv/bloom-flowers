@@ -1,0 +1,356 @@
+/*
+ * Bloom Flowers — the SiteSkin reference integration.
+ *
+ * One stylesheet, no framework, no build step, nothing loaded from another origin. A site owner
+ * reading this repository should be able to see the whole integration at once, and the whole
+ * integration is `.well-known/siteskin.json` — this file exists so the page underneath it looks
+ * like a real shop, not so the manifest has help.
+ *
+ * The four custom properties below are the same four values the manifest publishes in
+ * `branding`. They are declared once, here, so the page and the native chrome cannot drift apart.
+ */
+
+:root {
+  /* Published in .well-known/siteskin.json — keep in step. */
+  --brand: #d94f8a;
+  --brand-soft: #fadadd;
+  --surface: #fff7fa;
+  --ink: #2b1b24;
+
+  /*
+   * Derived, and deliberately not in the manifest.
+   *
+   * White on --brand is 3.86:1, which clears WCAG AA for large text and fails it for body text.
+   * Rather than lower the bar, the site darkens the brand for anything small: --brand-ink is
+   * 5.99:1 on the surface and --brand-deep carries white at 7.9:1.
+   *
+   * This is the same correction the browser applies on its own — SiteSkin runs a contrast guard
+   * over every manifest colour pair and corrects what fails, so the native chrome is readable
+   * whatever a site publishes. Doing it here too means the page and the chrome agree.
+   */
+  --brand-ink: #a63370;
+  --brand-deep: #8e2b5e;
+  --muted: #5c4450;
+  --leaf: #4f5d53;
+
+  --radius: 14px;
+  --measure: 68rem;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--surface);
+  color: var(--ink);
+  font: 16px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+/* System fonts only. A hosted webfont would be a second origin, and this site has exactly one. */
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+a {
+  color: var(--brand-ink);
+}
+
+/*
+ * Focus is never removed, only restyled. The outline is offset so it stays visible against both
+ * the surface and the brand fills.
+ */
+:focus-visible {
+  outline: 3px solid var(--brand-deep);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  background: var(--brand-deep);
+  color: #fff;
+  padding: 0.75rem 1rem;
+  z-index: 10;
+}
+
+.skip-link:focus {
+  left: 0;
+}
+
+.wrap {
+  max-width: var(--measure);
+  margin: 0 auto;
+  padding: 0 1.25rem;
+}
+
+/* --- header ------------------------------------------------------------------------------- */
+
+.site-header {
+  background: #fff;
+  border-bottom: 1px solid var(--brand-soft);
+}
+
+.site-header .wrap {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem 1.5rem;
+  padding-block: 0.9rem;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-weight: 700;
+  font-size: 1.15rem;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.brand img {
+  width: 40px;
+  height: 40px;
+}
+
+.site-nav ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 1.25rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.site-nav a {
+  display: inline-block;
+  padding: 0.5rem 0.25rem;
+  text-decoration: none;
+  font-weight: 600;
+  color: var(--muted);
+  border-bottom: 3px solid transparent;
+}
+
+.site-nav a:hover {
+  color: var(--brand-ink);
+}
+
+/*
+ * The current page is marked with aria-current in the markup, and shown with a weight change and
+ * an underline as well as colour — colour alone would leave the state invisible to anyone who
+ * cannot distinguish it.
+ */
+.site-nav a[aria-current="page"] {
+  color: var(--brand-ink);
+  border-bottom-color: var(--brand-ink);
+}
+
+/* --- generic blocks ----------------------------------------------------------------------- */
+
+main {
+  padding-block: 2rem 3rem;
+}
+
+h1 {
+  font-size: clamp(1.8rem, 1.2rem + 2.4vw, 2.6rem);
+  line-height: 1.2;
+  margin: 0 0 0.6rem;
+}
+
+h2 {
+  font-size: 1.4rem;
+  margin: 2.5rem 0 1rem;
+}
+
+.lede {
+  font-size: 1.1rem;
+  color: var(--muted);
+  margin: 0 0 1.5rem;
+  max-width: 46rem;
+}
+
+.hero {
+  background: linear-gradient(135deg, var(--brand-soft), #fff);
+  border: 1px solid var(--brand-soft);
+  border-radius: var(--radius);
+  padding: clamp(1.5rem, 1rem + 2vw, 2.75rem);
+  margin-bottom: 1rem;
+}
+
+.hero p {
+  max-width: 40rem;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.25rem;
+}
+
+.button {
+  display: inline-block;
+  padding: 0.8rem 1.4rem;
+  border-radius: 999px;
+  background: var(--brand-deep);
+  color: #fff;
+  font-weight: 600;
+  text-decoration: none;
+  min-height: 48px; /* the same 48px target the browser holds its own controls to */
+  line-height: 1.9;
+}
+
+.button--secondary {
+  background: #fff;
+  color: var(--brand-ink);
+  border: 2px solid var(--brand-ink);
+}
+
+.grid {
+  display: grid;
+  gap: 1.25rem;
+  grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.card {
+  background: #fff;
+  border: 1px solid var(--brand-soft);
+  border-radius: var(--radius);
+  padding: 1.1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.card h3 {
+  margin: 0;
+  font-size: 1.05rem;
+}
+
+.card .price {
+  font-weight: 700;
+  color: var(--brand-ink);
+}
+
+.card .note {
+  color: var(--muted);
+  font-size: 0.95rem;
+  margin: 0;
+}
+
+.swatch {
+  height: 7rem;
+  border-radius: 10px;
+  background: var(--brand-soft);
+  display: grid;
+  place-items: center;
+  font-size: 2.5rem;
+}
+
+.panel > h2:first-child {
+  margin-top: 0;
+}
+
+.panel {
+  background: #fff;
+  border: 1px solid var(--brand-soft);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+}
+
+/*
+ * Wide content scrolls inside its own box rather than widening the page. Without this a
+ * three-column table sets a min-content width larger than a phone viewport, and every block on
+ * the page inherits the overflow -- the paragraphs get clipped, not just the table.
+ */
+.table-scroll {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 22rem;
+}
+
+caption {
+  text-align: left;
+  color: var(--muted);
+  padding-bottom: 0.6rem;
+}
+
+th,
+td {
+  text-align: left;
+  padding: 0.7rem 0.5rem;
+  border-bottom: 1px solid var(--brand-soft);
+}
+
+tfoot th,
+tfoot td {
+  border-bottom: none;
+  font-weight: 700;
+}
+
+dl.summary {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 0.4rem 1.5rem;
+  margin: 0;
+}
+
+dl.summary dt {
+  color: var(--muted);
+}
+
+dl.summary dd {
+  margin: 0;
+}
+
+.callout {
+  border-left: 4px solid var(--brand-ink);
+  background: #fff;
+  padding: 1rem 1.25rem;
+  border-radius: 0 var(--radius) var(--radius) 0;
+  margin: 2rem 0 0;
+}
+
+.callout h2 {
+  margin-top: 0;
+  font-size: 1.15rem;
+}
+
+/* --- footer ------------------------------------------------------------------------------- */
+
+.site-footer {
+  border-top: 1px solid var(--brand-soft);
+  background: #fff;
+  padding-block: 1.5rem;
+  color: var(--muted);
+}
+
+.site-footer p {
+  margin: 0.35rem 0;
+}
+
+.site-footer a {
+  color: var(--brand-ink);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a,
+  .button {
+    transition: color 120ms ease, background-color 120ms ease, border-color 120ms ease;
+  }
+}

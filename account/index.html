@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Account — Bloom Flowers</title>
+    <meta name="description" content="An example profile page, shown to demonstrate SiteSkin navigation." />
+    <link rel="stylesheet" href="/assets/site.css" />
+    <link rel="icon" href="/assets/siteskin/logo.png" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="site-header">
+      <div class="wrap">
+        <a class="brand" href="/">
+          <img src="/assets/siteskin/logo.png" alt="" width="40" height="40" />
+          <span>Bloom Flowers</span>
+        </a>
+        <nav class="site-nav" aria-label="Primary">
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/catalog/">Catalog</a></li>
+            <li><a href="/cart/">Cart</a></li>
+            <li><a href="/account/" aria-current="page">Account</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main">
+      <div class="wrap">
+        <h1>Account</h1>
+        <p class="lede">
+          A worked example with no sign-in. The manifest's <code>profile</code> tab points here, and
+          matches every path beneath it, so a real shop's order history would stay on the same tab.
+        </p>
+
+        <div class="panel">
+          <h2>Example customer</h2>
+          <dl class="summary">
+            <dt>Name</dt>
+            <dd>Sam Rivera</dd>
+            <dt>Delivery address</dt>
+            <dd>14 Alder Street</dd>
+            <dt>Preferred slot</dt>
+            <dd>Evenings, after 6pm</dd>
+            <dt>Saved payment</dt>
+            <dd>None — this site takes no payments</dd>
+          </dl>
+        </div>
+
+        <h2>Recent orders</h2>
+        <div class="panel">
+          <div class="table-scroll">
+            <table>
+              <caption>Two example orders</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Order</th>
+                  <th scope="col">Placed</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">#1042</th>
+                  <td>Last Tuesday</td>
+                  <td>Delivered</td>
+                  <td>$54</td>
+                </tr>
+                <tr>
+                  <th scope="row">#1038</th>
+                  <td>Two weeks ago</td>
+                  <td>Delivered</td>
+                  <td>$29</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <section class="callout" aria-labelledby="account-note">
+          <h2 id="account-note">What the browser knows about this page</h2>
+          <p>
+            Nothing beyond its address. A SiteSkin manifest tells the browser which tab to highlight
+            for a path — it does not expose the page's contents, and no manifest field can read,
+            copy or transmit what is on screen.
+          </p>
+        </section>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="wrap">
+        <p>Bloom Flowers — a demonstration site for the SiteSkin protocol. Nothing here is for sale.</p>
+        <p>No cookies, no analytics, no third-party requests. Every byte is served from this origin.</p>
+      </div>
+    </footer>
+  </body>
+</html>

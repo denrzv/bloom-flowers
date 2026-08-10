@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Cart — Bloom Flowers</title>
+    <meta name="description" content="An example basket, shown to demonstrate SiteSkin navigation." />
+    <link rel="stylesheet" href="/assets/site.css" />
+    <link rel="icon" href="/assets/siteskin/logo.png" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="site-header">
+      <div class="wrap">
+        <a class="brand" href="/">
+          <img src="/assets/siteskin/logo.png" alt="" width="40" height="40" />
+          <span>Bloom Flowers</span>
+        </a>
+        <nav class="site-nav" aria-label="Primary">
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/catalog/">Catalog</a></li>
+            <li><a href="/cart/" aria-current="page">Cart</a></li>
+            <li><a href="/account/">Account</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main">
+      <div class="wrap">
+        <h1>Your cart</h1>
+        <p class="lede">
+          A worked example. This page has no checkout, no form and no storage — it exists so that
+          the Cart tab in the native bottom navigation has somewhere real to go.
+        </p>
+
+        <div class="panel">
+          <div class="table-scroll">
+            <table>
+              <caption>Two items, ready for same-day delivery</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Item</th>
+                  <th scope="col">Quantity</th>
+                  <th scope="col">Price</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">Spring Market Bunch</th>
+                  <td>1</td>
+                  <td>$38</td>
+                </tr>
+                <tr>
+                  <th scope="row">Desk Plant Duo</th>
+                  <td>1</td>
+                  <td>$32</td>
+                </tr>
+                <tr>
+                  <th scope="row">Same-day delivery</th>
+                  <td>1</td>
+                  <td>$8</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th scope="row">Total</th>
+                  <td></td>
+                  <td>$78</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        </div>
+
+        <div class="actions">
+          <a class="button" href="/catalog/">Keep browsing</a>
+          <a class="button button--secondary" href="tel:+10000000000">Call to order</a>
+        </div>
+
+        <section class="callout" aria-labelledby="cart-note">
+          <h2 id="cart-note">Why there is no checkout</h2>
+          <p>
+            SiteSkin describes navigation and branding. It never gains access to what a page
+            contains, what a visitor types, or what a shop stores — so a demonstration of the
+            protocol needs no commerce behind it, and adding one would only suggest the protocol
+            reaches further than it does.
+          </p>
+        </section>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="wrap">
+        <p>Bloom Flowers — a demonstration site for the SiteSkin protocol. Nothing here is for sale.</p>
+        <p>No cookies, no analytics, no third-party requests. Every byte is served from this origin.</p>
+      </div>
+    </footer>
+  </body>
+</html>
