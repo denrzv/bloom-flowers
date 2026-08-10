@@ -25,3 +25,18 @@ jobs:
 
       - name: Manifest is valid JSON
         run: python3 -c "import json; json.load(open('.well-known/siteskin.json'))"
+
+  # The checksum proves this repository serves the manifest webora validated. It cannot prove the
+  # site serves what that manifest describes: /catalog is asserted to be well-formed and
+  # same-origin by webora's tests, and asserted to exist by nothing. A reference integration whose
+  # Catalog tab 404s would pass every check above this line.
+  #
+  # Offline on purpose — no network, no cross-repository checkout — so it can be required rather
+  # than advisory.
+  routes:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Every path the manifest names is served
+        run: python3 tools/check-routes.py
