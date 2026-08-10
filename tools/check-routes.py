@@ -75,15 +75,24 @@ def served_file(root, path):
     `python3 -m http.server`, which is why it is not the layout here.
     """
     relative = path.lstrip("/")
-    if relative in ("", "/"):
+    if not relative:
         candidates = [root / "index.html"]
     else:
         base = root / relative
         candidates = [base, base / "index.html"]
 
     for candidate in candidates:
-        if candidate.is_file():
-            return candidate
+        # Resolve before asking, then require the result to still be inside the site.
+        # `Path.is_file()` follows `..` against the real filesystem, so without this a manifest
+        # naming `/../../../etc/passwd` is reported as served -- the check would turn a traversal
+        # into a pass. Here the manifest is checksum-pinned to a fixture whose URLs webora already
+        # proves are in-origin, but this script is meant to be copied into sites that have neither
+        # guard, and a guard that is only safe in the repository it was written for is not one.
+        resolved = candidate.resolve()
+        if not resolved.is_relative_to(root):
+            continue
+        if resolved.is_file():
+            return resolved
     return None
 
 
