@@ -53,7 +53,8 @@ The practical consequence is worth knowing before you start: **a project-style h
 serve a SiteSkin integration.** If your site lives at `username.github.io/my-project/`, the origin
 root belongs to whatever is deployed at `username.github.io/`, and your manifest is never
 requested. You need your own domain, or a user/organisation site that owns its origin root. This
-repository uses a custom domain for exactly that reason — see [`CNAME`](CNAME).
+demo is served from <https://denrzv.github.io> — a *user* site, not a project one — for exactly
+that reason.
 
 ---
 

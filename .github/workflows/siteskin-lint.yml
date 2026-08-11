@@ -2,17 +2,17 @@ name: siteskin-lint (deployed origin)
 
 # Runs the real validator against the live site, over the network, exactly as a site owner would:
 #
-#     ./gradlew :siteskin-lint:run --args="https://bloomflowers.webora.app"
+#     ./gradlew :siteskin-lint:run --args="https://denrzv.github.io"
 #
 # Exit 0 means a trusted configuration exists — warnings and dropped items do not change that.
 #
-# Manual on purpose. This job depends on DNS for bloomflowers.webora.app and on a completed Pages
-# deploy, neither of which lives in this repository. On a schedule it would report red until both
-# exist, and a job that is expected to be red is a job everyone learns to ignore — which is worse
-# than not having it. The offline guards in manifest-guard.yml are the ones that gate merges.
+# What this catches that the offline checks in manifest-guard.yml cannot: TLS, the redirect chain,
+# the response Content-Type, and whether the deployed bytes are the bytes in this repository.
 #
-# What this catches that the offline checks cannot: TLS, the redirect chain, the response
-# Content-Type, and whether the deployed bytes are the bytes in this repository.
+# Manual, for one remaining reason: this job checks out denrzv/webora for the validator, and that
+# repository is private, so the checkout fails without a token. Making it public — or adding a PAT
+# secret — is what turns this into something that can run on a schedule. Until then the check is run
+# locally against the live origin; it passes.
 
 on:
   workflow_dispatch:
@@ -20,7 +20,7 @@ on:
       origin:
         description: Origin to lint (scheme and host only, no path)
         required: true
-        default: https://bloomflowers.webora.app
+        default: https://denrzv.github.io
 
 permissions:
   contents: read
