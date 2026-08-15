@@ -1,23 +1,33 @@
 # Storefront artwork
 
-The floral artwork in this directory is original project-owned vector artwork created for the Bloom Flowers demonstration site. BLOOM-004 replaces the earlier flatter schematic compositions with a denser editorial illustration language: layered rose/peony-like blooms, daisies, foliage, soft photographic-style depth cues, blush ceramics, organic backgrounds and restrained shadowing.
+Bloom Flowers keeps all storefront imagery in this directory so the demo remains inspectable, same-origin and dependency-light.
 
-The files remain intentionally self-contained SVG so the reference site keeps its core guarantees:
+## BLOOM-005 generated imagery
 
-- every asset is committed with the site and served from the same origin;
-- no external image, font, script, filter or embedded remote reference is used;
-- no hotlinking, CDN or runtime image service is required;
-- intrinsic dimensions are declared by the consuming HTML to avoid layout shift;
-- the artwork can be inspected and redistributed with the repository as project-owned demo material.
+The primary showcase images are original AI-generated demo artwork produced specifically for Bloom Flowers, then curated and optimized for repository use. They are committed with the site and served from the Bloom origin; no image CDN, hotlink, runtime generation service, embedded remote reference, tracker, hosted font or other third-party dependency is required.
 
-Files:
+Files used by the current storefront:
 
-- `hero-bouquet.svg` — large pink/peach/cream landing-page arrangement.
-- `happy-days.svg` — canonical Happy Days product hero.
-- `happy-days-close.svg` — tighter Happy Days gallery crop.
-- `happy-days-side.svg` — complementary side composition.
-- `happy-days-wrap.svg` — wrapped-for-delivery variation.
-- `garden-party.svg` — cream/yellow/blush bouquet.
-- `sunset-peonies.svg` — coral/peach/warm-pink bouquet.
+- `hero-bouquet.webp` — portrait pink/peach/cream hero arrangement in a blush vase.
+- `happy-days.webp` — canonical Happy Days product image used by Popular Picks and the product page.
+- `garden-party.webp` — cream/yellow/blush bouquet for Popular Picks and related products.
+- `sunset-peonies.webp` — coral/peach/warm-pink bouquet for Popular Picks and related products.
+- `happy-days-detail-1.webp` — close-up floral crop for the Happy Days gallery.
+- `happy-days-detail-2.webp` — alternate side/vase view for the Happy Days gallery.
+- `happy-days-detail-3.webp` — wrapped, delivery-ready Happy Days presentation.
 
-These illustrations are presentation assets only. Product meaning, pricing, delivery information and navigation remain available as text and do not depend on colour or imagery.
+The WebP exports are intentionally sized for the static mobile-first demo rather than shipped at raw generation resolution. Consuming HTML declares each image's intrinsic dimensions so the browser can reserve layout space before decode.
+
+## BLOOM-004 vector artwork
+
+The earlier project-owned SVG set remains in the repository as fallback/reference artwork and as a record of the BLOOM-004 visual pass:
+
+- `hero-bouquet.svg`
+- `happy-days.svg`
+- `happy-days-close.svg`
+- `happy-days-side.svg`
+- `happy-days-wrap.svg`
+- `garden-party.svg`
+- `sunset-peonies.svg`
+
+These assets are presentation-only. Product names, prices, fulfilment information and navigation remain available as text and do not depend on colour or imagery. SiteSkin discovery, manifest ownership and browser trust surfaces are unchanged by the storefront artwork.
