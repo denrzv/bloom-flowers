@@ -20,7 +20,7 @@ index.html catalog/ cart/ account/   a plain static site, no framework, no build
 assets/site.css             one stylesheet
 assets/siteskin/logo.png    the brand asset the manifest points at
 tools/make-logo.py          regenerates that logo, standard library only
-tools/check-routes.py       asserts the site serves every path the manifest names
+tools/check-routes.py       asserts the site serves every manifest and linked local path
 ```
 
 There is nothing to install and nothing to build. Serve the directory:
@@ -44,6 +44,32 @@ root, so that is where the demo lives.
 
 `denrzv.github.io` is a stopgap. A dedicated domain is the intended home; it also cannot supply the
 several distinct origins a multi-site demo would need.
+
+### Live freshness and post-merge deploys
+
+`denrzv/bloom-flowers@main` is the source of truth, but GitHub does not trigger the separate
+`denrzv/denrzv.github.io` repository when a commit lands here unless an additional cross-repository
+token or GitHub App is introduced. The deployment repository therefore owns two freshness paths:
+
+- a scheduled resync bounds how long the public demo can remain stale;
+- `workflow_dispatch` is the immediate path after a visual, demo or protocol-sensitive merge.
+
+For an immediate refresh after merging into this repository:
+
+1. open **Actions → Publish Bloom Flowers** in `denrzv/denrzv.github.io`;
+2. choose **Run workflow** on `master`;
+3. wait for the `deploy` job to finish successfully;
+4. confirm the live home and any newly added route (for BLOOM-002, `/catalog/happy-days/`);
+5. compare the current `bloom-flowers/main` commit with `https://denrzv.github.io/deployment.json`.
+
+The deployment workflow writes `deployment.json` into the published artifact. Its `sourceSha` is the
+exact Bloom commit that was checked out and passed `tools/check-routes.py` before publication. That
+makes live/source drift deterministic: if `sourceSha` equals `main`, the live artifact was built from
+the current source; if it differs, run the deployment workflow rather than diagnosing the page by
+eye or relying on browser/cache state.
+
+This metadata is deployment evidence only. It is not part of SiteSkin discovery, is not referenced by
+the manifest, and grants the site no additional browser capability.
 
 ## The manifest is a copy
 
