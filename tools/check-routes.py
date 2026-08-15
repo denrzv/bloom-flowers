@@ -1,34 +1,32 @@
 #!/usr/bin/env python3
-"""Assert that this repository serves every path its SiteSkin manifest names.
+"""Assert that the static site serves its SiteSkin routes and local HTML references.
 
-The manifest is already guarded two ways: a checksum pins it byte-for-byte against the conformance
-fixture in denrzv/webora, and that repository's test suite proves it validates and that every URL
-in it resolves inside the serving origin. Neither guard knows whether the paths those URLs resolve
-*to* exist. A manifest whose Catalog tab leads to a 404 passes both.
+The manifest is guarded by a canonical checksum and by Webora's validator, but neither can prove
+that every route or asset actually exists in this repository. This offline guard checks two layers:
 
-So this is the third guard, and the only one that can see the filesystem. It runs offline, with no
-network and no cross-repository checkout, which is what lets it be a required check rather than an
-advisory one.
+1. every origin-relative route/asset named by `.well-known/siteskin.json`;
+2. every same-origin `href`/`src` reference discovered in the site's HTML files.
 
-Every checked path is derived from the manifest and the filesystem. There is deliberately no list
-of expected routes in this file: a hand-maintained list is the same assertion the corpus already
-fails to make, restated somewhere it can rot quietly. Renaming `catalog/index.html` must fail this
-check, and it does so because nothing here mentions the catalog.
+The second layer matters for ordinary web journeys that are intentionally outside the SiteSkin
+manifest, such as `/catalog/happy-days/`: if the page, a stylesheet, or one of its local bouquet
+images disappears, CI should fail instead of letting a broken demo deploy.
 
 Usage: python3 tools/check-routes.py [repo-root]
-Exit 0 when the site and its manifest agree; exit 1 with one line per disagreement.
+Exit 0 when the manifest and local HTML references all resolve; exit 1 otherwise.
 """
 
 import json
+import posixpath
 import struct
 import sys
+from html.parser import HTMLParser
 from pathlib import Path
+from urllib.parse import urlsplit
 
 MANIFEST = Path(".well-known/siteskin.json")
 
 # NET-003, the browser's decode budget for a brand asset. Duplicated here as the numbers a site
-# owner must respect rather than as an import, because this repository has no dependency on the
-# browser and gains nothing by growing one.
+# owner must respect rather than as an import, because this repository has no dependency on Webora.
 MAX_LOGO_BYTES = 512 * 1024
 MAX_AXIS_PIXELS = 1024
 MAX_TOTAL_PIXELS = 1_048_576
@@ -36,13 +34,32 @@ MAX_TOTAL_PIXELS = 1_048_576
 PNG_SIGNATURE = b"\x89PNG\r\n\x1a\n"
 
 
-def manifest_paths(manifest):
-    """Every origin-relative path the manifest names, as (json-pointer, path) pairs.
+class LocalReferenceParser(HTMLParser):
+    """Collect local navigation/resource attributes without executing any page code."""
 
-    `match` patterns contribute their literal prefix -- the part before the first glob token. A
-    pattern is a description of many URLs and cannot be resolved to one file, but its literal
-    prefix is a route the site had better serve, or the item is describing pages that do not exist.
-    """
+    ATTRIBUTES = {
+        "a": "href",
+        "img": "src",
+        "link": "href",
+        "script": "src",
+        "source": "src",
+    }
+
+    def __init__(self):
+        super().__init__()
+        self.references = []
+
+    def handle_starttag(self, tag, attrs):
+        wanted = self.ATTRIBUTES.get(tag)
+        if wanted is None:
+            return
+        for name, value in attrs:
+            if name == wanted and value:
+                self.references.append(value)
+
+
+def manifest_paths(manifest):
+    """Every origin-relative path the manifest names, as (json-pointer, path) pairs."""
     found = []
 
     site = manifest.get("site", {})
@@ -67,13 +84,7 @@ def manifest_paths(manifest):
 
 
 def served_file(root, path):
-    """The file a static host would serve for `path`, or None.
-
-    Mirrors the directory layout this site is built for: `/catalog` and `/catalog/` are both served
-    by `catalog/index.html`, because a static host redirects the first spelling to the second. A
-    layout of flat `catalog.html` files would resolve on GitHub Pages and 404 under
-    `python3 -m http.server`, which is why it is not the layout here.
-    """
+    """The file a static host would serve for an origin-relative path, or None."""
     relative = path.lstrip("/")
     if not relative:
         candidates = [root / "index.html"]
@@ -82,18 +93,55 @@ def served_file(root, path):
         candidates = [base, base / "index.html"]
 
     for candidate in candidates:
-        # Resolve before asking, then require the result to still be inside the site.
-        # `Path.is_file()` follows `..` against the real filesystem, so without this a manifest
-        # naming `/../../../etc/passwd` is reported as served -- the check would turn a traversal
-        # into a pass. Here the manifest is checksum-pinned to a fixture whose URLs webora already
-        # proves are in-origin, but this script is meant to be copied into sites that have neither
-        # guard, and a guard that is only safe in the repository it was written for is not one.
         resolved = candidate.resolve()
         if not resolved.is_relative_to(root):
             continue
         if resolved.is_file():
             return resolved
     return None
+
+
+def page_route(root, html_file):
+    """Return the origin path that corresponds to one HTML file in the static layout."""
+    relative = html_file.relative_to(root).as_posix()
+    if relative == "index.html":
+        return "/"
+    if relative.endswith("/index.html"):
+        return "/" + relative[: -len("index.html")]
+    return "/" + relative
+
+
+def resolve_local_reference(base_route, raw_reference):
+    """Resolve an HTML href/src to an origin path, or None for external/non-file references."""
+    parsed = urlsplit(raw_reference)
+    if parsed.scheme or parsed.netloc or not parsed.path:
+        return None
+
+    if parsed.path.startswith("/"):
+        return parsed.path
+
+    base_directory = base_route if base_route.endswith("/") else posixpath.dirname(base_route) + "/"
+    resolved = posixpath.normpath(posixpath.join(base_directory, parsed.path))
+    if not resolved.startswith("/"):
+        resolved = "/" + resolved
+    return resolved
+
+
+def html_references(root):
+    """Yield (source-file, raw-reference, resolved-origin-path) for same-origin HTML links/assets."""
+    for html_file in sorted(root.rglob("*.html")):
+        # `.git` is never expected under a normal checkout, but keep repository metadata out if this
+        # script is pointed at an unusual worktree layout.
+        if ".git" in html_file.parts:
+            continue
+
+        parser = LocalReferenceParser()
+        parser.feed(html_file.read_text(encoding="utf-8"))
+        route = page_route(root, html_file)
+        for reference in parser.references:
+            resolved = resolve_local_reference(route, reference)
+            if resolved is not None:
+                yield html_file.relative_to(root).as_posix(), reference, resolved
 
 
 def png_dimensions(data):
@@ -107,7 +155,7 @@ def check_logo(root, url, failures):
     """The browser refuses a brand asset outside NET-003's budget, so refuse it here first."""
     path = served_file(root, url)
     if path is None:
-        return  # already reported as a missing route
+        return
 
     data = path.read_bytes()
     dimensions = png_dimensions(data)
@@ -139,7 +187,6 @@ def main():
     paths = manifest_paths(manifest)
     failures = []
 
-    # A manifest that named nothing would pass every assertion below without checking anything.
     if not paths:
         print("[routes] the manifest names no paths -- nothing was checked", file=sys.stderr)
         return 1
@@ -154,6 +201,13 @@ def main():
         if served_file(root, path) is None:
             failures.append(f"{pointer}: `{path}` is named by the manifest and served by no file")
 
+    references = list(html_references(root))
+    for source, raw_reference, resolved in references:
+        if served_file(root, resolved) is None:
+            failures.append(
+                f"{source}: `{raw_reference}` resolves to `{resolved}`, which is served by no file"
+            )
+
     logo = manifest.get("branding", {}).get("logoUrl")
     if logo:
         check_logo(root, logo, failures)
@@ -164,7 +218,11 @@ def main():
             print(f"  - {failure}", file=sys.stderr)
         return 1
 
-    print(f"[routes] OK -- {len(paths)} manifest path(s) all resolve to served files")
+    unique_references = len({resolved for _, _, resolved in references})
+    print(
+        f"[routes] OK -- {len(paths)} manifest path(s) and "
+        f"{unique_references} linked local route/asset path(s) resolve"
+    )
     return 0
 
 
