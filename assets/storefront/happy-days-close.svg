@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 620" role="img" aria-labelledby="title desc">
+  <title id="title">Happy Days bouquet close-up</title>
+  <desc id="desc">A close view of pink roses, coral ranunculus, white daisies and green leaves.</desc>
+  <rect width="720" height="620" rx="44" fill="#fff4f7"/>
+  <ellipse cx="360" cy="540" rx="210" ry="42" fill="#e8cbd5" opacity=".45"/>
+  <g stroke="#50715d" stroke-width="15" stroke-linecap="round">
+    <path d="M352 338 290 548"/><path d="M374 330 414 548"/><path d="M336 350 350 548"/>
+  </g>
+  <g fill="#6f956f">
+    <ellipse cx="278" cy="355" rx="44" ry="20" transform="rotate(-28 278 355)"/>
+    <ellipse cx="438" cy="360" rx="48" ry="21" transform="rotate(30 438 360)"/>
+    <ellipse cx="330" cy="405" rx="38" ry="17" transform="rotate(-58 330 405)"/>
+    <ellipse cx="405" cy="412" rx="42" ry="18" transform="rotate(52 405 412)"/>
+  </g>
+  <g>
+    <g transform="translate(235 235)"><circle r="76" fill="#ef8fb6"/><circle r="54" fill="#f6b2cb"/><circle r="30" fill="#d94f8a"/><path d="M-34-5C-10-38 25-37 39-7 23 20-9 25-34-5Z" fill="#ffd5e4" opacity=".7"/></g>
+    <g transform="translate(382 205)"><circle r="72" fill="#ffb089"/><circle r="50" fill="#ffd0b8"/><circle r="28" fill="#ee7e69"/><path d="M-32 8C-7-22 25-27 37 1 23 27-9 31-32 8Z" fill="#fff0e6" opacity=".68"/></g>
+    <g transform="translate(500 270)"><circle r="64" fill="#f28ab1"/><circle r="43" fill="#ffc2d6"/><circle r="23" fill="#c9407b"/></g>
+    <g transform="translate(330 320)"><circle r="58" fill="#fffdf7"/><g fill="#ffd95e"><circle r="18"/></g><g fill="#fff" transform="rotate(20)"><ellipse cx="0" cy="-34" rx="16" ry="31"/><ellipse cx="34" cy="0" rx="31" ry="16"/><ellipse cx="0" cy="34" rx="16" ry="31"/><ellipse cx="-34" cy="0" rx="31" ry="16"/></g><circle r="14" fill="#dca72b"/></g>
+    <g transform="translate(175 335)"><circle r="46" fill="#ffdce8"/><circle r="28" fill="#ef84ad"/><circle r="13" fill="#b93770"/></g>
+  </g>
+  <path d="M255 468c45-22 165-22 210 0l-30 118H285Z" fill="#f3a9bd"/>
+  <path d="M285 488c40 18 110 18 150 0l-15 98H300Z" fill="#f7c8d5" opacity=".82"/>
+</svg>
