@@ -6,12 +6,13 @@
     <title>Catalog — Bloom Flowers</title>
     <meta name="description" content="Every bouquet and plant Bloom Flowers delivers today." />
     <link rel="stylesheet" href="/assets/site.css" />
+    <link rel="stylesheet" href="/assets/shop.css" />
     <link rel="icon" href="/assets/siteskin/logo.png" />
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
 
-    <header class="site-header">
+    <header class="site-header shop-header">
       <div class="wrap">
         <a class="brand" href="/">
           <img src="/assets/siteskin/logo.png" alt="" width="40" height="40" />
@@ -30,49 +31,67 @@
 
     <main id="main">
       <div class="wrap">
-        <h1>Catalog</h1>
-        <p class="lede">
-          Everything below is cut and arranged the same day. Stems vary with the season, so a
-          bouquet is never quite the same twice.
-        </p>
+        <div class="catalog-intro">
+          <p class="product-eyebrow">Freshly arranged today</p>
+          <h1>Catalog</h1>
+          <p class="lede">
+            Small-batch bouquets made with seasonal stems. The flowers change a little from week to
+            week, but the colour stories stay recognisably Bloom.
+          </p>
+        </div>
 
         <h2>Bouquets</h2>
-        <ul class="grid">
-          <li class="card">
-            <div class="swatch" aria-hidden="true">💐</div>
-            <h3>Spring Market Bunch</h3>
-            <p class="price">$38</p>
-            <p class="note">Tulips, ranunculus and eucalyptus, wrapped in kraft paper.</p>
+        <ul class="showcase-grid">
+          <li class="showcase-card">
+            <a class="showcase-card__image" href="/catalog/happy-days/" aria-label="View Happy Days Bouquet">
+              <img
+                src="/assets/storefront/happy-days.svg"
+                alt="Happy Days bouquet with pink roses, peach flowers and white daisies"
+                width="720"
+                height="620"
+              />
+              <span class="showcase-badge">Bestseller</span>
+            </a>
+            <div class="showcase-card__body">
+              <h3><a href="/catalog/happy-days/">Happy Days Bouquet</a></h3>
+              <p class="note">Pink roses, peach seasonal blooms, white daisies and greens.</p>
+              <div class="showcase-card__footer">
+                <p class="price">$59</p>
+                <a class="showcase-link" href="/catalog/happy-days/">View bouquet →</a>
+              </div>
+            </div>
           </li>
-          <li class="card">
-            <div class="swatch" aria-hidden="true">🌹</div>
-            <h3>Garden Roses, Dozen</h3>
-            <p class="price">$54</p>
-            <p class="note">Scented English roses in blush and cream.</p>
+          <li class="showcase-card">
+            <a class="showcase-card__image" href="#garden-party" aria-label="Garden Party bouquet details">
+              <img
+                src="/assets/storefront/garden-party.svg"
+                alt="Garden Party bouquet with blush roses, yellow flowers and eucalyptus"
+                width="720"
+                height="620"
+                loading="lazy"
+              />
+            </a>
+            <div class="showcase-card__body" id="garden-party">
+              <h3>Garden Party</h3>
+              <p class="note">Blush roses, ranunculus and eucalyptus.</p>
+              <div class="showcase-card__footer"><p class="price">$54</p><span class="note">Catalog demo</span></div>
+            </div>
           </li>
-          <li class="card">
-            <div class="swatch" aria-hidden="true">🌷</div>
-            <h3>Tulip Trio</h3>
-            <p class="price">$24</p>
-            <p class="note">Thirty stems, three colours, no filler.</p>
-          </li>
-          <li class="card">
-            <div class="swatch" aria-hidden="true">🌻</div>
-            <h3>Sunflower Armful</h3>
-            <p class="price">$29</p>
-            <p class="note">Fifteen tall stems. Needs a heavy vase.</p>
-          </li>
-          <li class="card">
-            <div class="swatch" aria-hidden="true">🌼</div>
-            <h3>Field Daisies</h3>
-            <p class="price">$21</p>
-            <p class="note">Simple, cheerful, and the longest-lasting thing we sell.</p>
-          </li>
-          <li class="card">
-            <div class="swatch" aria-hidden="true">🥀</div>
-            <h3>Dried Winter Bundle</h3>
-            <p class="price">$34</p>
-            <p class="note">Statice, wheat and poppy pods. Lasts the season.</p>
+          <li class="showcase-card">
+            <a class="showcase-card__image" href="#sunset-peonies" aria-label="Sunset Peonies bouquet details">
+              <img
+                src="/assets/storefront/sunset-peonies.svg"
+                alt="Sunset Peonies bouquet in coral, peach and warm pink tones"
+                width="720"
+                height="620"
+                loading="lazy"
+              />
+            </a>
+            <div class="showcase-card__body" id="sunset-peonies">
+              <h3>Sunset Peonies</h3>
+              <p class="note">Peonies, sweet peas and soft seasonal foliage.</p>
+              <div class="showcase-card__footer"><p class="price">$64</p><span class="note">Catalog demo</span></div>
+            </div>
           </li>
         </ul>
 
@@ -98,9 +117,7 @@
           </li>
         </ul>
 
-        <p class="actions">
-          <a class="button" href="/cart/">Go to cart</a>
-        </p>
+        <p class="actions"><a class="button" href="/cart/">Go to cart</a></p>
       </div>
     </main>
 

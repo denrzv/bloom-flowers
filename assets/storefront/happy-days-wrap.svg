@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 620" role="img" aria-labelledby="title desc">
+  <title id="title">Happy Days bouquet wrapped for delivery</title>
+  <desc id="desc">A wrapped pink, peach and white bouquet ready for delivery with a ribbon around the stems.</desc>
+  <rect width="720" height="620" rx="44" fill="#f6f0ff"/>
+  <circle cx="570" cy="110" r="95" fill="#fff0c7" opacity=".7"/>
+  <ellipse cx="365" cy="555" rx="176" ry="34" fill="#b7a9c5" opacity=".22"/>
+  <g stroke="#4f705c" stroke-width="12" stroke-linecap="round">
+    <path d="M330 290 360 500"/><path d="M390 280 374 500"/><path d="M430 302 386 500"/>
+  </g>
+  <g fill="#739477">
+    <ellipse cx="292" cy="330" rx="45" ry="18" transform="rotate(-26 292 330)"/>
+    <ellipse cx="451" cy="342" rx="48" ry="19" transform="rotate(28 451 342)"/>
+    <ellipse cx="365" cy="360" rx="40" ry="17" transform="rotate(-58 365 360)"/>
+  </g>
+  <g>
+    <g transform="translate(286 244)"><circle r="66" fill="#ed84ae"/><circle r="45" fill="#ffc1d5"/><circle r="23" fill="#c43c74"/></g>
+    <g transform="translate(395 220)"><circle r="70" fill="#ffae87"/><circle r="48" fill="#ffd5c1"/><circle r="25" fill="#e77362"/></g>
+    <g transform="translate(485 292)"><circle r="51" fill="#f19abc"/><circle r="32" fill="#ffd3e2"/><circle r="16" fill="#bc376f"/></g>
+    <g transform="translate(350 315)"><circle r="48" fill="#fffdf7"/><g fill="#fff"><ellipse cy="-28" rx="13" ry="25"/><ellipse cx="28" rx="25" ry="13"/><ellipse cy="28" rx="13" ry="25"/><ellipse cx="-28" rx="25" ry="13"/></g><circle r="12" fill="#dda92c"/></g>
+  </g>
+  <path d="M245 388c65 26 176 28 244 0l-56 168c-36 35-101 34-135 0Z" fill="#f5d8c8"/>
+  <path d="M292 470c44 21 103 21 148 0l-14 98c-33 21-86 20-119 0Z" fill="#efd2bd"/>
+  <path d="M302 487c42 14 85 14 128 0" fill="none" stroke="#d94f8a" stroke-width="16" stroke-linecap="round"/>
+  <path d="M362 486c-24 22-39 44-42 66M369 486c26 22 42 44 46 66" fill="none" stroke="#d94f8a" stroke-width="12" stroke-linecap="round"/>
+</svg>
