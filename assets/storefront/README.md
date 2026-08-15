@@ -1,15 +1,23 @@
 # Storefront artwork
 
-The bouquet illustrations in this directory are original project artwork created for the Bloom Flowers demonstration site. They are committed and served from the same origin as the page, contain no remote references, and exist solely as static presentation assets for the demo storefront and product-detail journey.
+The floral artwork in this directory is original project-owned vector artwork created for the Bloom Flowers demonstration site. BLOOM-004 replaces the earlier flatter schematic compositions with a denser editorial illustration language: layered rose/peony-like blooms, daisies, foliage, soft photographic-style depth cues, blush ceramics, organic backgrounds and restrained shadowing.
+
+The files remain intentionally self-contained SVG so the reference site keeps its core guarantees:
+
+- every asset is committed with the site and served from the same origin;
+- no external image, font, script, filter or embedded remote reference is used;
+- no hotlinking, CDN or runtime image service is required;
+- intrinsic dimensions are declared by the consuming HTML to avoid layout shift;
+- the artwork can be inspected and redistributed with the repository as project-owned demo material.
 
 Files:
 
-- `hero-bouquet.svg` — landing-page hero arrangement.
-- `happy-days.svg` — pink/peach showcase bouquet and canonical Happy Days product hero.
-- `happy-days-close.svg` — original close-up composition for the Happy Days product gallery.
-- `happy-days-side.svg` — original side-view composition for the Happy Days product gallery.
-- `happy-days-wrap.svg` — original wrapped-for-delivery composition for the Happy Days product gallery.
-- `garden-party.svg` — blush/yellow showcase bouquet.
-- `sunset-peonies.svg` — coral/pink showcase bouquet.
+- `hero-bouquet.svg` — large pink/peach/cream landing-page arrangement.
+- `happy-days.svg` — canonical Happy Days product hero.
+- `happy-days-close.svg` — tighter Happy Days gallery crop.
+- `happy-days-side.svg` — complementary side composition.
+- `happy-days-wrap.svg` — wrapped-for-delivery variation.
+- `garden-party.svg` — cream/yellow/blush bouquet.
+- `sunset-peonies.svg` — coral/peach/warm-pink bouquet.
 
-All artwork is project-owned original vector illustration. No external image, font, script or embedded remote reference is used. Layout dimensions are declared by the consuming HTML so the browser can reserve space before the image is decoded.
+These illustrations are presentation assets only. Product meaning, pricing, delivery information and navigation remain available as text and do not depend on colour or imagery.
