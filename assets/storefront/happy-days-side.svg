@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 620" role="img" aria-labelledby="title desc">
+  <title id="title">Happy Days bouquet from the side</title>
+  <desc id="desc">A side view of a pink and peach bouquet in a blush ceramic vase.</desc>
+  <rect width="720" height="620" rx="44" fill="#fff9f4"/>
+  <path d="M0 470c150-58 290-60 720 4v146H0Z" fill="#f8e9e4"/>
+  <ellipse cx="385" cy="548" rx="164" ry="36" fill="#cfaeba" opacity=".35"/>
+  <g stroke="#4f705c" stroke-width="13" stroke-linecap="round">
+    <path d="M365 276 338 470"/><path d="M393 264 420 472"/><path d="M330 292 386 470"/><path d="M425 296 366 470"/>
+  </g>
+  <g fill="#769a76">
+    <ellipse cx="310" cy="322" rx="44" ry="18" transform="rotate(-30 310 322)"/>
+    <ellipse cx="450" cy="330" rx="46" ry="18" transform="rotate(26 450 330)"/>
+    <ellipse cx="352" cy="366" rx="38" ry="16" transform="rotate(-62 352 366)"/>
+  </g>
+  <g>
+    <g transform="translate(300 230)"><circle r="68" fill="#ef8fb6"/><circle r="46" fill="#ffd0df"/><circle r="24" fill="#cc4078"/></g>
+    <g transform="translate(410 205)"><circle r="64" fill="#ffb18f"/><circle r="43" fill="#ffd8c5"/><circle r="22" fill="#e97665"/></g>
+    <g transform="translate(475 286)"><circle r="52" fill="#f19ab9"/><circle r="32" fill="#ffd3e1"/><circle r="16" fill="#c23b73"/></g>
+    <g transform="translate(345 310)"><circle r="50" fill="#fffdf8"/><g fill="#fff"><ellipse cy="-29" rx="13" ry="26"/><ellipse cx="29" rx="26" ry="13"/><ellipse cy="29" rx="13" ry="26"/><ellipse cx="-29" rx="26" ry="13"/></g><circle r="13" fill="#d7a62f"/></g>
+  </g>
+  <path d="M305 438c20-18 128-18 151 0l-14 112c-7 42-116 42-123 0Z" fill="#efadbd"/>
+  <path d="M326 456c27 16 82 16 108 0l-10 90c-5 23-83 23-88 0Z" fill="#f7cad6" opacity=".9"/>
+</svg>
