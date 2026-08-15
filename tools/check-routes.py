@@ -9,7 +9,8 @@ that every route or asset actually exists in this repository. This offline guard
 
 The second layer matters for ordinary web journeys that are intentionally outside the SiteSkin
 manifest, such as `/catalog/happy-days/`: if the page, a stylesheet, or one of its local bouquet
-images disappears, CI should fail instead of letting a broken demo deploy.
+images disappears, CI should fail instead of letting a broken demo deploy. Linked WebP assets are
+also checked as RIFF containers so a truncated binary cannot pass merely because the path exists.
 
 Usage: python3 tools/check-routes.py [repo-root]
 Exit 0 when the manifest and local HTML references all resolve; exit 1 otherwise.
@@ -32,6 +33,8 @@ MAX_AXIS_PIXELS = 1024
 MAX_TOTAL_PIXELS = 1_048_576
 
 PNG_SIGNATURE = b"\x89PNG\r\n\x1a\n"
+WEBP_RIFF = b"RIFF"
+WEBP_SIGNATURE = b"WEBP"
 
 
 class LocalReferenceParser(HTMLParser):
@@ -176,6 +179,40 @@ def check_logo(root, url, failures):
         failures.append(f"{url}: {width * height} pixels exceeds the {MAX_TOTAL_PIXELS}-pixel budget")
 
 
+def check_webp(path, display_path, failures):
+    """Reject a linked WebP whose RIFF size or chunk layout proves the binary is truncated."""
+    data = path.read_bytes()
+    if len(data) < 12 or data[:4] != WEBP_RIFF or data[8:12] != WEBP_SIGNATURE:
+        failures.append(f"{display_path}: not a WebP RIFF container")
+        return
+
+    declared_size = int.from_bytes(data[4:8], "little") + 8
+    if declared_size != len(data):
+        failures.append(
+            f"{display_path}: WebP RIFF declares {declared_size} bytes but file has {len(data)} bytes"
+        )
+        return
+
+    position = 12
+    while position < len(data):
+        if position + 8 > len(data):
+            failures.append(f"{display_path}: truncated WebP chunk header at byte {position}")
+            return
+
+        chunk_size = int.from_bytes(data[position + 4 : position + 8], "little")
+        position += 8
+        chunk_end = position + chunk_size
+        if chunk_end > len(data):
+            failures.append(
+                f"{display_path}: WebP chunk overruns the file by {chunk_end - len(data)} byte(s)"
+            )
+            return
+        position = chunk_end + (chunk_size & 1)
+
+    if position != len(data):
+        failures.append(f"{display_path}: malformed WebP RIFF padding/chunk layout")
+
+
 def main():
     root = Path(sys.argv[1] if len(sys.argv) > 1 else ".").resolve()
     manifest_file = root / MANIFEST
@@ -202,11 +239,18 @@ def main():
             failures.append(f"{pointer}: `{path}` is named by the manifest and served by no file")
 
     references = list(html_references(root))
+    checked_webps = set()
     for source, raw_reference, resolved in references:
-        if served_file(root, resolved) is None:
+        local_file = served_file(root, resolved)
+        if local_file is None:
             failures.append(
                 f"{source}: `{raw_reference}` resolves to `{resolved}`, which is served by no file"
             )
+            continue
+
+        if local_file.suffix.lower() == ".webp" and local_file not in checked_webps:
+            check_webp(local_file, resolved, failures)
+            checked_webps.add(local_file)
 
     logo = manifest.get("branding", {}).get("logoUrl")
     if logo:
@@ -221,7 +265,8 @@ def main():
     unique_references = len({resolved for _, _, resolved in references})
     print(
         f"[routes] OK -- {len(paths)} manifest path(s) and "
-        f"{unique_references} linked local route/asset path(s) resolve"
+        f"{unique_references} linked local route/asset path(s) resolve; "
+        f"{len(checked_webps)} linked WebP asset(s) pass RIFF integrity checks"
     )
     return 0
 
