@@ -16,6 +16,14 @@ Files used by the current storefront:
 - `happy-days-detail-2.webp` — alternate side/vase view for the Happy Days gallery.
 - `happy-days-detail-3.webp` — wrapped, delivery-ready Happy Days presentation.
 
+## BLOOM-006 generated catalog plants
+
+BLOOM-006 completes the catalog image language with three generated houseplant product images using the same soft cream/blush studio direction as the bouquet set:
+
+- `desk-plant-duo.webp` — two easy-care indoor plants in blush and cream ceramic pots.
+- `trailing-pothos.webp` — lush trailing pothos in a blush ceramic pot.
+- `small-cactus-set.webp` — pastel three-pot cactus/succulent set.
+
 The WebP exports are intentionally sized for the static mobile-first demo rather than shipped at raw generation resolution. Consuming HTML declares each image's intrinsic dimensions so the browser can reserve layout space before decode.
 
 ## BLOOM-004 vector artwork
